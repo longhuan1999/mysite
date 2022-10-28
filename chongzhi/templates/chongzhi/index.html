@@ -1,0 +1,153 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block title %}小龙的卡密商城{% endblock %}
+{% block css %}
+	<link href="{% static 'css/login.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block content %}
+	<div class="container">
+		{% if request.session.is_login %}
+		{% else %}
+			<div class="alert alert-warning alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>建议!</strong> 为避免您用于查询订单的邮箱被他人注册，请先用您的邮箱<a href="/chaxun/register" class="alert-link">注册账号</a>！如已注册请忽略这条消息。
+			</div>
+		{% endif %}
+		
+		<script>
+			function submitSelected(){
+				document.getElementById("taocan_select").submit();
+			}
+			
+		</script>
+
+		<div align="center" id="chongzhi">
+			<table width="60%" border="3" class="table table-bordered">
+			  <tbody>
+			  <form id="taocan_select" method="POST" action="/chongzhi/" style="align-content: center">
+								{% csrf_token %}
+			  	<tr align="center">
+				  <td>
+					 <span style="align-items: center">商品分类:</span>
+
+							<select id="shangpin" name="shangpin" onchange="submitSelected()" style="align-self: center" class="form-control" width="70%">
+							  <option value="请选择套餐">请选择商品</option>
+								{% for choice in msg.shangpin %}
+
+									<option value="{{choice}}" {% if msg.sp_select != '' and msg.sp_select == choice %}  selected {% endif %} >{{choice}}</option>
+
+								{% endfor  %}
+							</select>
+				  </td>
+				</tr>
+				<tr align="center">
+				  <td>
+					 <span style="align-items: center">套餐分类:</span>
+							<select id="taocan" name="taocan" onchange="submitSelected()" style="align-self: center" class="form-control" width="70%">
+							  <option value="请选择套餐">请选择套餐</option>
+								{% for choice in msg.taocan %}
+
+									<option value="{{choice}}" {% if msg.select != '' and msg.select == choice %}  selected {% endif %} >{{choice}}</option>
+
+								{% endfor  %}
+							</select>
+
+
+				  </td>
+				</tr>
+				</form>
+				 {% if msg.alipay_price != '' %}
+				<tr align="center">
+
+				  <td>
+					  <span>商品详情:</span>
+							<p class="big_txt">
+								<b id="alipay_price">支付宝价格：{{msg.alipay_price}}</b>元&nbsp;&nbsp;
+								<b id="wechat_price">微信价格：{{msg.wechat_price}}</b>元&nbsp;&nbsp;
+								<b id="paypal_price">PayPal价格：
+									{% if msg.paypal_price == '不支持' %}
+									<font style="color: rgb(255, 0, 98)">{{msg.paypal_price}}</font></b>
+									{% endif %}
+									{% if msg.paypal_price != '不支持' %}
+									{{msg.paypal_price}}</b>美元
+									{% endif %}
+									&nbsp;&nbsp;
+								<b id="kucun" {% if msg.kucun < 10 %}style="color: red"{% endif %}>库存：{{msg.kucun}}</b>
+							</p>
+					
+						{% if msg.kucun == 0 and msg.select != "请选择套餐" and msg.select != "" %}
+							<p>无库存，请联系客服QQ：2114467924</p>
+						{% endif %}
+						
+						<div class="alert alert-warning alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<strong>{{msg.msgid}}</strong>
+						</div>
+						
+					  </td>
+
+				</tr>
+				{% endif %}
+				{% if msg.kucun != 0 and msg.kucun != '' %}
+
+				<tr>
+				  <td align="center">
+						
+						<span style="align-self: center">支付方式:</span>
+							<form id="tijiao" method="POST" action="/chongzhi/tijiao" onsubmit="return validate_form()" class="form-horizontal">
+								<input type="hidden" name="slected_taocan" id="slected_taocan" value="{{msg.select}}">
+								{% csrf_token %}
+								<table width="90%" border="3" align="center"  class="table table-bordered">
+								  <tbody>
+									<tr>
+										<td height="33" colspan="2"><div align="center">
+											<label class="radio-inline"><input type="radio" name="zhifu" id="zhifu_2" value="wechat" checked>微信（暂时稳定）</label>
+											{% if msg.paypal_price == '不支持' %}
+											<label class="radio-inline"><input type="radio" name="zhifu" id="zhifu_0" value="paypal" disabled="disabled">PayPal</label>
+											{% endif %}
+											{% if msg.paypal_price != '不支持' %}
+											<label class="radio-inline"><input type="radio" name="zhifu" id="zhifu_0" value="paypal">PayPal</label>
+											{% endif %}
+											<label class="radio-inline"><input type="radio" name="zhifu" id="zhifu_1" value="alipay">支付宝</label>
+										</div></td>
+											
+									</tr>
+									<tr>
+									  <td colspan="2"><div align="right">
+										  <div class="form-group" style="wigth: 50%">
+											<label for="inputEmail3" class="col-sm-2 control-label">邮箱：</label>
+											<div class="col-sm-10">
+											  <input type="email" class="form-control" name="user_email" id="inputEmail3" placeholder="您的唯一身份凭证" 
+											  required {% if request.session.is_login %} value="{{request.session.user_email}}" readonly="readonly" {% endif %}>
+											</div>
+										  </div></div></td>
+									</tr>
+									<tr>
+									  <td colspan="2"><div align="center">
+										<input class="btn btn-default" id="submitId" name="tijiao" type="submit" value="提交订单">
+									  </div></td>
+									</tr>
+								  </tbody>
+								</table>
+
+							</form>
+
+						</td>
+				</tr>
+				<tr>
+				  <td align="center">
+					  <font size="4" style="color: rgb(255, 0, 98)">目前支付宝、微信均为收款码和收款链接支付，且需要本人手机收到收款通知后发送给服务器，所以存在手机掉线、被支付宝微信风控等不稳定因素。<br><font size="5" style="color: rgb(255, 0, 157); font-weight: 900">PayPal可正常在线付款！微信不支持唤醒支付！支付宝与本人不在同一地区会受限！</font></font>
+					  </td>
+			  </tr>
+				{% endif %}
+			  </tbody>
+			</table>
+
+
+
+
+		</div>
+	</div> <!-- /container -->
+{% endblock %}

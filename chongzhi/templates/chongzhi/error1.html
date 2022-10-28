@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}重复请求{% endblock %}
+{% block css %}
+	<link href="{% static 'css/login.css' %}" rel="stylesheet"/>
+	<link href="{% static 'bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="jumbotron">
+          <h1>重复请求</h1>
+          <p>表单已存在，请勿重复提交！</p>
+          <p><a class="btn btn-primary btn-lg" href="/chongzhi/" role="button">返回充值界面</a></p>
+        </div>
+
+
+    </div> <!-- /container -->
+{% endblock %}

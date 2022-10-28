@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>导入卡密</title>
+</head>
+<script language="javascript">
+	function validate_form(){
+		var text = document.getElementsByName("kamis");
+		text = text.replace(/ /,"");
+		var text_list = test.split("/n");
+		var return_list = [];
+		for(var i;i in text_list;){
+			if(i.length < 18){
+				return_list.append(i);
+			}
+    	}
+		if(return_list != []){
+			var return_text = "";
+			for(var i;i in return_list;){
+				return_text += i + "\n";
+			}
+			return_text += "这些卡密小于18位，确定继续？";
+			if(confirm(return_text)){
+				return true;
+			}else{return false;}
+			
+		}else{return true;}
+		
+	}
+</script> 
+<body>
+	<div align="center" id="chongzhi">
+      <form method="POST" action="/chongzhi/admin" onsubmit="return validate_form()">{% csrf_token %}
+        <table width="80%" border="3">
+          <tbody>
+            <tr align="center">
+              <td>
+                <span style="align-items: center">套餐分类:</span>
+                
+                <select id="taocan" name="taocan" style="align-self: center">
+                  <option value="请选择套餐">请选择套餐</option>
+							{% for choice in msg.taocan %}
+
+								<option value="{{choice}}" {% if msg.select != '' and msg.select == choice %}  selected {% endif %} >{{choice}}</option>
+
+							{% endfor  %}
+						</select>
+                <div align="right"><a href="/chongzhi/logout"><button type="button">注销</button></a></div>
+                </td>
+            </tr>
+            <tr>
+              <td><div align="center">
+                <textarea name="kamis" cols="50" rows="10" required=></textarea></div></td>
+            </tr>
+            <tr>
+              <td><div align="center"><input type="submit" value="批量导入"></div></td>
+            </tr>
+			{% if msg.return_list != '' %}
+			<tr>
+              <td><div align="center">
+                <textarea  cols="50" rows="10" readonly="readonly">{{msg.return_list}}</textarea></div></td>
+            </tr>
+			{% endif %}
+          </tbody>
+          </table>
+      </form>
+
+	</div>
+</body>
+</html>

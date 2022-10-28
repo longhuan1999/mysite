@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}页面不存{% endblock %}
+{% block css %}
+	<link href="{% static 'css/login.css' %}" rel="stylesheet"/>
+	<link href="{% static 'bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="jumbotron">
+          <h1>无法自动取消订单</h1>
+          <p>由于PayPal在取消返回时并不会传回订单信息，无法为您自动取消订单，请手动到“查询订单页面”取消订单！</p>
+          <p><a class="btn btn-primary btn-lg" href="/chongzhi/" role="button">返回充值界面</a>   <a class="btn btn-primary btn-lg" href="/chaxun/" role="button">查询订单</a></p>
+        </div>
+
+
+    </div> <!-- /container -->
+{% endblock %}

@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+	#QQ{
+    position: fixed;
+    bottom: 50%;
+    left: 0;
+    z-index: 999;
+}
+	
+</style>
+</head>
+<a id="QQ" target="_blank" href="https://wpa.qq.com/msgrd?v=3&uin=2114467924&site=qq&menu=yes"><img border="0" src="https://wpa.qq.com/pa?p=2:2114467924:53" alt="联系代理客服" title="联系代理客服"/></a>
+<body>
+	<form id="frm" action="http://www.baidu.com">
+	考试还剩余<div id="time"></div>
+</form>
+<script>
+    var times = 1 * 60;//剩余时间,单位秒
+    var timeDiv = document.getElementById("time");
+    var timeObj = null;
+    function timer(){
+        if(times == 0){
+            //倒计时结束，提交表单
+            document.getElementById("frm").submit();
+            window.clearInterval(timeObj);
+            return;
+        }
+        var t = Math.floor(times/60) +"分"+times%60+"秒"
+        timeDiv.innerHTML = t;
+        times --;
+    }
+    timeObj = window.setInterval(timer,1000);
+</script>
+</body>
+</html>

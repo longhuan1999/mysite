@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}主页{% endblock %}
+{% block css %}
+	<link href="{% static 'css/login.css' %}" rel="stylesheet"/>
+	<link href="{% static 'bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css' %}" rel="stylesheet" />
+	<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+	<script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/moment-with-locales.js' %}"></script>
+    <script src="{% static 'bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js' %}"></script>
+
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+			<div class='col-sm-6'>
+				<div class="form-group">
+					<label>选择开始时间：</label>
+					<!--指定 date标记-->
+					<div class='input-group date' id='datetimepicker1'>
+						<input type='text' class="form-control" />
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-remove"></span>
+						</span>
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class='col-sm-6'>
+				<div class="form-group">
+					<label>选择结束时间：</label>
+					<!--指定 date标记-->
+					<div class='input-group date' id='datetimepicker2'>
+						<input type='text' class="form-control" />
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-remove"></span>
+						</span>
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			$('#datetimepicker1').datetimepicker({
+				locale: moment.locale('zh-cn'),
+				format: 'YYYY-MM-DD hh:00',
+				autoclose: true,
+				showClose:true,
+				calendarWeeks: true,
+				toolbarPlacement:'default',
+				showTodayButton:true,
+				showClear:true,
+				defaultDate: "2019-11-1",
+			});
+			$('#datetimepicker2').datetimepicker({
+				locale: moment.locale('zh-cn'),
+				format: 'YYYY-MM-DD hh:00',
+				autoclose: true,
+				showClose:true,
+				calendarWeeks: true,
+				toolbarPlacement:'default',
+				showTodayButton:true,
+				showClear:true,
+			});
+
+		</script>
+
+    </div> <!-- /container -->
+{% endblock %}

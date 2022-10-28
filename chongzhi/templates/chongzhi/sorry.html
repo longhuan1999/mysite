@@ -1,0 +1,21 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block title %}抱歉{% endblock %}
+{% block css %}
+	<link href="{% static 'css/login.css' %}" rel="stylesheet"/>
+	<link href="{% static 'bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="jumbotron">
+          <h1>卡密已售完！</h1>
+          <p>非常抱歉，有人手速比你快……</p>
+          <p><a class="btn btn-primary btn-lg" href="/chongzhi/" role="button">返回充值界面</a></p>
+        </div>
+
+
+    </div> <!-- /container -->
+{% endblock %}
+

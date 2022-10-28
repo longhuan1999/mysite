@@ -1,0 +1,22 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block title %}支付成功{% endblock %}
+{% block css %}
+	<link href="{% static 'css/login.css' %}" rel="stylesheet"/>
+	<link href="{% static 'bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="jumbotron">
+          <h1>支付成功</h1>
+          <p>您已支付成功，请注意查收邮件或查询订单，若未收到邮件并且订单显示未支付或已过期请与客服联系！</p>
+          <p><a class="btn btn-primary btn-lg" href="/chongzhi/" role="button">返回充值界面</a>
+            <a class="btn btn-primary btn-lg" href="/chaxun/" role="button">查询订单</a></p>
+          <p>paymentid:{{msg.paymentid}}</p>
+        </div>
+
+
+    </div> <!-- /container -->
+{% endblock %}
